@@ -1,0 +1,30 @@
+{
+    "users": [
+        {
+            "id": "2134747",
+            "pseudo": "Panda",
+            "documents": {
+                "ROI": true,
+                "AR": true,
+                "Independant": true
+            },
+            "level": 3,
+            "lifepoints": 5,
+            "warning_And_Sanctions": "",
+            "banned": true
+        },
+        {
+            "id": "RH012345",
+            "pseudo": "Piou",
+            "documents": {
+                "ROI": true,
+                "AR": false,
+                "Independant": true
+            },
+            "level": 1,
+            "lifepoints": 10,
+            "warning_And_Sanctions": "",
+            "banned": false
+        }
+    ]
+}
