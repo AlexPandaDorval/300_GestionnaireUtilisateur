@@ -51,25 +51,7 @@ public class JsonReadWriteSystem : MonoBehaviour
         return myUsersList.Find(user => user.pseudo == userPseudo);
     }
 
-    public void CreateNewUser()
-    {
-        isNew = true;
-        //checker si l'utilisateur existe avant de lancer
-        myActiveUser = null;
-        canvasManager.ClearInputField();
-        canvasManager.documentsPanel.SetActive(true);
-        User newUser = new User();
 
-        newUser.id = canvasManager.idInputField.text;
-        newUser.pseudo = canvasManager.pseudoInputField.text;
-
-        newUser.level = 0;
-        newUser.lifepoints = 3;
-        newUser.warning_And_Sanctions = "";
-        newUser.banned = false;
-
-        myActiveUser = newUser;
-    }
 
     public void SaveIntoJson()
     {
