@@ -29,23 +29,11 @@ public class PannelsFiller : MonoBehaviour
     public Toggle roiToggle;
     public Toggle arToggle;
     public Toggle independantToggle;
-    public Toggle banToggle;
     [Space]
     [Header("Warnings Pannel")]
     public GameObject warningPanel;
     public TMP_InputField warningInputField;
-    [Space]
-    [Header("New Players Modifiers")]
-    public TMP_InputField newIdInputfield;
-    public TMP_InputField newPseudoInputField;
-    public Toggle newRoiToggle;
-    public Toggle newArToggle;
-    public Toggle newIndependantToggle;
-
-
-
-
-
+    public Toggle banToggle;
 
     public void UIFillingUser(User userSend)
     {
@@ -85,30 +73,6 @@ public class PannelsFiller : MonoBehaviour
         else
         {
             backgroungImage.color = normalColor;
-        }
-    }
-
-    public void OpenCloseDocPanel()
-    {
-        if(documentsPanel.activeInHierarchy == true)
-        {
-            documentsPanel.SetActive(false);
-        }
-        else
-        {
-            documentsPanel.SetActive(true);
-        }
-    }
-
-    public void OpencloseWarningPanel()
-    {
-        if(warningPanel.activeInHierarchy == true)
-        {
-            warningPanel.SetActive(false);
-        }
-        else
-        {
-            warningPanel.SetActive(true);
         }
     }
 }

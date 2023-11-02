@@ -6,9 +6,10 @@ using UnityEngine;
 [RequireComponent(typeof(PannelsFiller))]
 public class JsonReadWriteSystem : MonoBehaviour
 {
-    public PannelsFiller canvasManager;
+    public PannelsFiller pannelFiller;
+    public NewPlayerCreator newPlayerCreator;
 
-    public string jsonPath = "D:/Unity Projects/ProjetSucces/Assets/Scripts/JSON_Files/Users.json";
+    public string jsonPath = "D:/Unity Projects/ProjetSucces/Assets/Scripts/JSON_Files/Users.json"; //modifier pour mettre un persistant path
 
     [HideInInspector]
     public List<User> myUsersList;
@@ -24,16 +25,16 @@ public class JsonReadWriteSystem : MonoBehaviour
 
         myUsersList = usersList.users;
 
-        if (canvasManager.idInputField.text != "")
+        if (pannelFiller.idInputField.text != "")
         {
-            myActiveUser = FindUserById(canvasManager.idInputField.text);
+            myActiveUser = FindUserById(pannelFiller.idInputField.text);
         }
         else
         {
             Debug.Log("Aucun champ rempli");
         }
 
-        canvasManager.UIFillingUser(myActiveUser);
+        pannelFiller.UIFillingUser(myActiveUser);
     }
     public User FindUserById(string userId)
     {
@@ -58,13 +59,13 @@ public class JsonReadWriteSystem : MonoBehaviour
         User result = FindUserById(myActiveUser.id);
         if (result.id == myActiveUser.id)
         {
-
+            
         }
         else
         {
+            myActiveUser = newPlayerCreator.newPlayer();
             myUsersList.Add(myActiveUser);
         }
         File.WriteAllText(jsonPath, JsonUtility.ToJson(myUsersList, true));
-        canvasManager.OpenCloseDocPanel();
     }
 }
