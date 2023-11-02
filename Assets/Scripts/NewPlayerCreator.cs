@@ -19,9 +19,12 @@ public class NewPlayerCreator : MonoBehaviour
 
         myNewPlayer.id = newIdInputfield.text;
         myNewPlayer.pseudo = newPseudoInputField.text;
-        myNewPlayer.documents.ROI = newRoiToggle.isOn;
-        myNewPlayer.documents.AR = newArToggle.isOn;
-        myNewPlayer.documents.Independant = newIndependantToggle.isOn;
+
+        Documents newDoc = new Documents();
+        newDoc.ROI = newRoiToggle.isOn;
+        newDoc.AR = newArToggle.isOn;
+        newDoc.Independant = newIndependantToggle.isOn;
+        myNewPlayer.documents = newDoc;
 
         myNewPlayer.level = 0;
         myNewPlayer.lifepoints = 10;

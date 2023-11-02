@@ -51,20 +51,21 @@ public class JsonReadWriteSystem : MonoBehaviour
 
         /*
         Cherche l'usager dans la liste Json. 
-        Si l'usager existe : le mets à jour avec les nouvelles données, 
-        sinon : crée un nouvel usager
+        Si l'usager n'existe pas existe : crée un nouvel usager  
+        sinon : le mets à jour avec les nouvelles données,
         Puis, écris l'ensemble du contenu de ma liste d'usagers dans le fichier json
          */
 
         User result = FindUserById(myActiveUser.id);
-        if (result.id == myActiveUser.id)
-        {
-            
-        }
-        else
+        if (result == null)
         {
             myActiveUser = newPlayerCreator.newPlayer();
             myUsersList.Add(myActiveUser);
+            Debug.Log("J'ai mis à jour un joueur");
+        }
+        else
+        {
+            Debug.Log("J'essaye de mettre à jour un joueur");
         }
         File.WriteAllText(jsonPath, JsonUtility.ToJson(myUsersList, true));
     }
