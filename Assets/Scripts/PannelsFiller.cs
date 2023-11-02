@@ -5,38 +5,58 @@ using TMPro;
 using UnityEngine.UI;
 
 [RequireComponent(typeof(JsonReadWriteSystem))]
-public class CanvasManager : MonoBehaviour
+public class PannelsFiller : MonoBehaviour
 {
-    public GameObject documentsPanel;
-    public GameObject warningPanel;
-
+    [Header("Main Menu UI")]
     public TMP_InputField idInputField;
-    public TMP_InputField pseudoInputField;
-    public TMP_InputField warningInputField;
-
+    public Image backgroungImage;
+    public Color normalColor;
+    public Color bannedColor;
+    [Space]
+    [Header("Player Pannels")]
+    public GameObject currentPlayerPannel;
+    public GameObject newPlayerPannel;
+    [Space]
+    [Header("Current Player Modifiers")]
+    [Header("Hero Pannel")]
+    public GameObject heroPannel;
+    public TMP_Text playerPseudo;
+    public TMP_Text level;
+    public Slider lifepointsSlider;
+    [Space]
+    [Header("Documents Pannel")]
+    public GameObject documentsPanel;
     public Toggle roiToggle;
     public Toggle arToggle;
     public Toggle independantToggle;
     public Toggle banToggle;
+    [Space]
+    [Header("Warnings Pannel")]
+    public GameObject warningPanel;
+    public TMP_InputField warningInputField;
+    [Space]
+    [Header("New Players Modifiers")]
+    public TMP_InputField newIdInputfield;
+    public TMP_InputField newPseudoInputField;
+    public Toggle newRoiToggle;
+    public Toggle newArToggle;
+    public Toggle newIndependantToggle;
 
-    public TMP_Text level;
 
-    public Slider lifepointsSlider;
 
-    public Image backgroungImage;
-    public Color normalColor;
-    public Color bannedColor;
+
 
 
     public void UIFillingUser(User userSend)
     {
-        idInputField.text = userSend.id;
-        pseudoInputField.text = userSend.pseudo;
-        warningInputField.text = userSend.warning_And_Sanctions;
+        Debug.Log(userSend.id);
+        playerPseudo.text = userSend.pseudo;
 
         roiToggle.isOn = userSend.documents.ROI;
         arToggle.isOn = userSend.documents.AR;
         independantToggle.isOn = userSend.documents.Independant;
+
+        warningInputField.text = userSend.warning_And_Sanctions;
         banToggle.isOn = userSend.banned;
         BanColoration();
        
@@ -44,12 +64,16 @@ public class CanvasManager : MonoBehaviour
         lifepointsSlider.value = userSend.lifepoints;
     }
 
-    public Documents ReturnDocumentsInfos(User userSend)
+    public User ReturnInfos(User userSend)
     {
         userSend.documents.ROI = roiToggle.isOn;
         userSend.documents.AR = arToggle.isOn;
         userSend.documents.Independant = independantToggle.isOn;
-        return userSend.documents;
+        int resultLevel;
+        int.TryParse(level.text, out resultLevel);
+        userSend.level = resultLevel;
+        userSend.lifepoints = (int)lifepointsSlider.value;
+        return userSend;
     }
 
     public void BanColoration()
@@ -61,15 +85,6 @@ public class CanvasManager : MonoBehaviour
         else
         {
             backgroungImage.color = normalColor;
-        }
-    }
-
-    public void ClearInputField()
-    {
-        if(idInputField.text != "" || pseudoInputField.text != "")
-        {
-        idInputField.text = "";
-        pseudoInputField.text = "";
         }
     }
 

@@ -3,12 +3,10 @@ using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 
-[RequireComponent(typeof(CanvasManager))]
+[RequireComponent(typeof(PannelsFiller))]
 public class JsonReadWriteSystem : MonoBehaviour
 {
-    private bool isNew;
-
-    public CanvasManager canvasManager;
+    public PannelsFiller canvasManager;
 
     public string jsonPath = "D:/Unity Projects/ProjetSucces/Assets/Scripts/JSON_Files/Users.json";
 
@@ -26,32 +24,21 @@ public class JsonReadWriteSystem : MonoBehaviour
 
         myUsersList = usersList.users;
 
-        if (canvasManager.idInputField.text != "" && canvasManager.pseudoInputField.text == "")
+        if (canvasManager.idInputField.text != "")
         {
             myActiveUser = FindUserById(canvasManager.idInputField.text);
-        }
-        else if (canvasManager.idInputField.text == "" && canvasManager.pseudoInputField.text != "")
-        {
-            myActiveUser = FindUserByPseudo(canvasManager.pseudoInputField.text);
         }
         else
         {
             Debug.Log("Aucun champ rempli");
         }
 
-        isNew = false;
         canvasManager.UIFillingUser(myActiveUser);
     }
     public User FindUserById(string userId)
     {
         return myUsersList.Find(user => user.id == userId);
     }
-    public User FindUserByPseudo(string userPseudo)
-    {
-        return myUsersList.Find(user => user.pseudo == userPseudo);
-    }
-
-
 
     public void SaveIntoJson()
     {
@@ -59,21 +46,25 @@ public class JsonReadWriteSystem : MonoBehaviour
         UsersList usersList = JsonUtility.FromJson<UsersList>(json);
         myUsersList = usersList.users;
 
-        myActiveUser.documents = canvasManager.ReturnDocumentsInfos(myActiveUser);
-        Debug.Log(myActiveUser.documents.AR);
 
+
+        /*
+        Cherche l'usager dans la liste Json. 
+        Si l'usager existe : le mets à jour avec les nouvelles données, 
+        sinon : crée un nouvel usager
+        Puis, écris l'ensemble du contenu de ma liste d'usagers dans le fichier json
+         */
 
         User result = FindUserById(myActiveUser.id);
-        if (result == null)
+        if (result.id == myActiveUser.id)
         {
-            myUsersList.Add(myActiveUser);
+
         }
         else
         {
-            result.id = myActiveUser.id;
-            result.pseudo = myActiveUser.pseudo;
+            myUsersList.Add(myActiveUser);
         }
-        File.WriteAllText(jsonPath, JsonUtility.ToJson(myActiveUser, true));
+        File.WriteAllText(jsonPath, JsonUtility.ToJson(myUsersList, true));
         canvasManager.OpenCloseDocPanel();
     }
 }
